@@ -3,8 +3,6 @@ import sys
 
 def main():
 
-    
-
     if len(sys.argv) != 2:
         sys.exit(f"Usage: {sys.argv[0]} <file name>")
 
@@ -39,10 +37,7 @@ def is_invalid_id(id):
     if id_length <= 1:
         return False
     
-    if id_length % 2 != 0:
-        return False
-    
-    for i in range((id_length // 2), (id_length // 2) + 1):
+    for i in range(1, (id_length // 2) + 1):
         # chunk needs to cleanly divide total length
         if id_length % i != 0:
             continue
