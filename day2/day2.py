@@ -3,30 +3,36 @@ import sys
 
 def main():
 
-    invalid_ids = [11, 22, 99, 1010, 1188511885, 222222, 446446, 38593859]
-    valid_ids = [12345, 111112, 890890891, 12222122222]
-
-    for id in invalid_ids:
-        if not is_invalid_id(id):
-            print(str(id) + " is not invalid!")
-
-    for id in valid_ids:
-        if is_invalid_id(id):
-            print(str(id) + " is invalid!")
-
-
-    return 
+    
 
     if len(sys.argv) != 2:
         sys.exit(f"Usage: {sys.argv[0]} <file name>")
 
     try:
         with open(sys.argv[1]) as file:
-           print("opened file!")
+           file_data = file.read()
     except FileNotFoundError:
         sys.exit(f"{sys.argv[1]}: Unable to open file")
 
+    total = 0
+    for range in file_data.split(","):
+        total += total_for_line(range)
 
+    print(total)
+
+def total_for_line(line):
+    
+    nums = line.split("-")
+    start = int(nums[0])
+    end = int(nums[1])
+
+    total = 0
+    for id in range(start, end + 1):
+        if is_invalid_id(id):
+            print("invalid id: " + str(id))
+            total += id
+
+    return total
 
 def is_invalid_id(id):
 
@@ -34,7 +40,10 @@ def is_invalid_id(id):
     if id_length <= 1:
         return False
     
-    for i in range(1, (id_length // 2) + 1):
+    if id_length % 2 != 0:
+        return False
+    
+    for i in range((id_length // 2), (id_length // 2) + 1):
         # chunk needs to cleanly divide total length
         if id_length % i != 0:
             continue
