@@ -19,13 +19,20 @@ def main():
     num_rows = len(rows_of_paper)
     num_cols = len(rows_of_paper[0])
 
-    accessible = 0
-    for row in range(num_rows):
-        for col in range(num_cols):
-            if rows_of_paper[row][col] and is_paper_accessible(row, col, rows_of_paper):
-                accessible += 1
+    total_removed = 0
+    removed_last_round = -1
+    while removed_last_round != 0:
 
-    print(accessible)
+        removed_last_round = 0
+        for row in range(num_rows):
+            for col in range(num_cols):
+                if rows_of_paper[row][col] and is_paper_accessible(row, col, rows_of_paper):
+                    removed_last_round += 1
+                    rows_of_paper[row][col] = False
+        
+        total_removed += removed_last_round
+
+    print(total_removed)
 
 def is_paper_accessible(row, col, rows_of_paper):
     num_rows = len(rows_of_paper)
